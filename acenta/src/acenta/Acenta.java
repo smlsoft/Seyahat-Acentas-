@@ -7,11 +7,6 @@ import java.util.logging.Logger;
 
 public class Acenta {
 
-    public static void main(String[] args) {
-   
-    
-        
-        
-        
+    public static void main(String[] args) {     
 }
 }

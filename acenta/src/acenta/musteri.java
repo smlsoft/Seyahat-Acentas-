@@ -90,7 +90,9 @@ public class musteri {
         //mus.musteriekle("35008702589", 537, "zahidcoban@gmail.com", "123", "erkek", "Muhammed Zahid", "Çoban");
         System.out.println(mus.getmusteribytc("35008702588").ad);
     }
-
+    
+//veri değiştirme sql kodu ama eklemedim
+//UPDATE `acenta`.`musteri` SET `adi`='ahmet' WHERE `id`='35008702589';
+    
 }
 
-//'35008702588', '5378196122', '0', 'zahidcoban@gmail.com', '123', 'erkek', 'Muhammed Zahid ', 'Çoban');");

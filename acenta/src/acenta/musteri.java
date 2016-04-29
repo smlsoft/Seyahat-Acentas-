@@ -9,6 +9,9 @@ import java.sql.Statement;
 
 public class musteri {
 
+    String adres = "jdbc:mysql://94.73.170.236/acenta";
+    String username = "fsm";
+    String password = "RRrv34U8";
     int bonus;
     String telno, tc, ad, soyad, mail, sifre, cinsiyet;
 
@@ -33,7 +36,7 @@ public class musteri {
 
     void musteriekle(String tc, String telno, String ad, String soyad, String mail, String sifre, String cinsiyet) throws SQLException {
 
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/acenta?useSSL=false", "root", "6122");
+        Connection con = DriverManager.getConnection(adres, username, password);//"jdbc:mysql://localhost:3306/acenta?useSSL=false", "root", "6122");
         preparedStatement = con.prepareStatement("INSERT INTO acenta.musteri("
                 + "id,"
                 + "telno,"
@@ -59,13 +62,13 @@ public class musteri {
     }
 
     musteri getmusteribytc(String tc) throws SQLException {
-        String telno=null;
-        String ad=null;
-        String soyad=null;
-        String mail=null;
-        String sifre=null;
-        String cinsiyet=null;
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/acenta?useSSL=false", "root", "6122");
+        String telno = null;
+        String ad = null;
+        String soyad = null;
+        String mail = null;
+        String sifre = null;
+        String cinsiyet = null;
+        Connection con = DriverManager.getConnection(adres, username, password);
 
         Statement stat = con.createStatement();
 
@@ -87,12 +90,10 @@ public class musteri {
 
     public static void main(String args[]) throws SQLException {
         musteri mus = new musteri();
-        //mus.musteriekle("35008702589", 537, "zahidcoban@gmail.com", "123", "erkek", "Muhammed Zahid", "Çoban");
-        System.out.println(mus.getmusteribytc("35008702588").ad);
+        //mus.musteriekle("35008702589", "5378196122", "zahidcoban@gmail.com", "123", "erkek", "Muhammed Zahid", "Çoban");
+        System.out.println(mus.getmusteribytc("35008702589").ad);
     }
-    
+
 //veri değiştirme sql kodu ama eklemedim
 //UPDATE `acenta`.`musteri` SET `adi`='ahmet' WHERE `id`='35008702589';
-    
 }
-

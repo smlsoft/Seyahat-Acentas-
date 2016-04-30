@@ -17,7 +17,7 @@ import java.sql.Statement;
  * @author emre
  */
 public class personel {
-     String adres = "jdbc:mysql://94.73.170.236/acenta";
+    String adres = "jdbc:mysql://94.73.170.236/acenta";
     String username = "fsm";
     String password = "RRrv34U8";
     

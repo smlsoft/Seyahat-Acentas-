@@ -39,9 +39,13 @@ public class Arac {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    Arac(String aractur, String kalkis_yer, String varis_yer, int id, int firma_id, int koltuk_sayisi, int fiyat, Date kalkis_zaman ) {  //Date varis_zaman
-        this.aractur = aractur;
-        this.kalkis_yer = kalkis_yer;
+    
+    Arac(){}
+    
+    //bu constructor databasede girdi oluşturmaz
+    Arac(String kalkis_yer, String varis_yer, int id, int firma_id, int koltuk_sayisi, int fiyat, Date kalkis_zaman ) {  //Date varis_zaman
+        this.aractur = "araç";
+        this.kalkis_zaman = kalkis_zaman;
         this.varis_yer = varis_yer;
         this.id = id;
         this.firma_id = firma_id;
@@ -51,7 +55,7 @@ public class Arac {
         //this.varis_zaman = varis_zaman;
     }
 
-    void AracEkle(String aractur, String kalkis_yer, String varis_yer, int id, int firma_id, int koltuk_sayisi, int fiyat, Date kalkis_zaman) throws SQLException {   //Date varis_zaman
+    void AracEkle(String kalkis_yer, String varis_yer, int firma_id, int koltuk_sayisi, int fiyat, Date kalkis_zaman) throws SQLException {   //Date varis_zaman
         Connection con = DriverManager.getConnection(adres, username, password);
         preparedStatement = con.prepareStatement("INSERT INTO acenta.arac("
                 + "id,"
@@ -64,10 +68,13 @@ public class Arac {
                 + "varis_yer,"
                 + "fiyat) "
                 + "VALUES (?, ?, ?, ?,?,?,?,?)");
-
-        preparedStatement.setInt(1, id);
+        
+        Acenta a=new Acenta();
+        int sonId=a.tablodakiVeriSayisi("arac");
+        
+        preparedStatement.setInt(1, sonId+1);
         preparedStatement.setInt(2, firma_id);
-        preparedStatement.setString(3, aractur);
+        preparedStatement.setString(3, "araç");
         preparedStatement.setInt(4, koltuk_sayisi);
         preparedStatement.setDate(5, kalkis_zaman);
       //  preparedStatement.setDate(6, new Date());
@@ -77,7 +84,7 @@ public class Arac {
 
         preparedStatement.executeUpdate();
 
-        aracaKoltukEkle(koltuk_sayisi, id);
+        aracaKoltukEkle(koltuk_sayisi, sonId+1);
 
     }
 

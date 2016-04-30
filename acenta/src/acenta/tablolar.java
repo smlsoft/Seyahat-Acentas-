@@ -47,6 +47,7 @@ public class tablolar extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -86,6 +87,13 @@ public class tablolar extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Tablodaki bütün verileri sil");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,10 +102,14 @@ public class tablolar extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(300, 300, 300)
+                        .addComponent(jButton2)
+                        .addGap(46, 46, 46))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,7 +119,9 @@ public class tablolar extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -186,7 +200,7 @@ public class tablolar extends javax.swing.JFrame {
             //seçili satırı databaseden sil
             Connection con = DriverManager.getConnection(adres, username, password);
             PreparedStatement preparedStmt = con.prepareStatement("delete from "+jComboBox1.getSelectedItem()+" where "+jTable1.getColumnName(0)+" = ?");
-            preparedStmt.setString(1, (String) jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+            preparedStmt.setString(1, (String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
             
             preparedStmt.executeUpdate();
             //seçili satırı databaseden sil
@@ -239,6 +253,55 @@ public class tablolar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+          
+        
+        try {
+            Connection con = DriverManager.getConnection(adres, username, password);
+            PreparedStatement preparedStmt = con.prepareStatement("delete from "+jComboBox1.getSelectedItem());
+            preparedStmt.executeUpdate();
+            
+            
+            
+            ///   jtable ı yeni dataları çekerek yenile
+            int satirsayisi = 0;
+            int columnCount = 0;
+            Acenta a = new Acenta();
+            
+            satirsayisi = (a.tablodakiVeriSayisi(jComboBox1.getSelectedItem() + ""));
+
+            con = DriverManager.getConnection(adres, username, password);
+            Statement stat = con.createStatement();
+
+            ResultSet res = stat.executeQuery("select * from acenta." + jComboBox1.getSelectedItem());
+            ResultSetMetaData metadata = res.getMetaData();
+            columnCount = metadata.getColumnCount();
+
+            Object columnNames[] = new Object[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                columnNames[i] = metadata.getColumnName(i+1);
+            }
+            Object rowData[][] = new Object[satirsayisi][columnNames.length];        //{ { "Row1-Column1", "Row1-Column2", "Row1-Column3" },{ "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
+            
+           
+                for (int i = 0;res.next(); i++) {
+                    for (int j = 0; j < columnNames.length; j++) {
+                        rowData[i][j]=res.getString(j+1);
+                    }
+                }
+                
+            
+            
+            
+            DefaultTableModel model = new DefaultTableModel(rowData, columnNames);
+            jTable1.setModel(model);
+            ///   jtable ı yeni dataları çekerek yenile
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(tablolar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -276,6 +339,7 @@ public class tablolar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

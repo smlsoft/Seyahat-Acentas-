@@ -18,13 +18,14 @@ public class Acenta {
         res.next();
         int veriSayisi = res.getInt("rowcount");
         res.close();
-        return veriSayisi;
+        return veriSayisi; //satır sayısını döndürür yani
     }
     
     public static void main(String[] args) throws SQLException {    
 
-        seyahatFirmasi sF= new seyahatFirmasi("Devlet Demir Yolları");
-        
+        //seyahatFirmasi sF= new seyahatFirmasi("Devlet Demir Yollari");
+        Arac ucak=new Arac();
+        ucak.AracEkle("istanbul", "ankara", 1, 100, 50, new Date(2016,12,11));
         
 }
 }

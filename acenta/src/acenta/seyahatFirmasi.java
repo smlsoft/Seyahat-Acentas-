@@ -31,7 +31,6 @@ public class seyahatFirmasi {
         Statement stat = con.createStatement();
         Acenta a=new Acenta();
         int sonId = a.tablodakiVeriSayisi("firma");
-        System.out.println(sonId);
         preparedStatement = con.prepareStatement("INSERT INTO acenta.firma("
                 + "id,"
                 + "isim)"

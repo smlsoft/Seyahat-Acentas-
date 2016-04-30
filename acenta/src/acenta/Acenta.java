@@ -22,9 +22,9 @@ public class Acenta {
     }
     
     public static void main(String[] args) throws SQLException {    
+
+        seyahatFirmasi sF= new seyahatFirmasi("Devlet Demir Yolları");
         
-       Acenta a=new Acenta();
-        System.out.println(a.tablodakiVeriSayisi("musteri"));
         
 }
 }

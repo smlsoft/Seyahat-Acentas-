@@ -29,22 +29,20 @@ public class seyahatFirmasi {
     
         Connection con = DriverManager.getConnection(adres, username, password);
         Statement stat = con.createStatement();
-        ResultSet res = stat.executeQuery("SELECT COUNT(*) AS rowcount FROM acenta.firma");
-        res.next();
-        int sonId = res.getInt("rowcount");
-        res.close();
-        
+        Acenta a=new Acenta();
+        int sonId = a.tablodakiVeriSayisi("firma");
+        System.out.println(sonId);
         preparedStatement = con.prepareStatement("INSERT INTO acenta.firma("
                 + "id,"
-                + "isim,"
+                + "isim)"
                 + "VALUES (?, ?)");
 
         preparedStatement.setInt(1, sonId);
         preparedStatement.setString(2, isim);
 
-      
-
         preparedStatement.executeUpdate();
         
     }
+    
+    
 }

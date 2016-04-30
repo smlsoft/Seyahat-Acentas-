@@ -8,6 +8,7 @@ package acenta;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -45,6 +46,7 @@ public class tablolar extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -77,6 +79,13 @@ public class tablolar extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setText("Seçili kaydı sil");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,8 +94,10 @@ public class tablolar extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,13 +106,16 @@ public class tablolar extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
+         ///   jtable ı yeni dataları çekerek yenile
         try {
             int satirsayisi = 0;
             int columnCount = 0;
@@ -124,14 +138,14 @@ public class tablolar extends javax.swing.JFrame {
             }
             Object rowData[][] = new Object[satirsayisi][columnNames.length];        //{ { "Row1-Column1", "Row1-Column2", "Row1-Column3" },{ "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
             
-            while(res.next()){
-                for (int i = 0; i < satirsayisi; i++) {
+           
+                for (int i = 0;res.next(); i++) {
                     for (int j = 0; j < columnNames.length; j++) {
                         rowData[i][j]=res.getString(j+1);
                     }
                 }
                 
-            }
+            
             
             
             DefaultTableModel model = new DefaultTableModel(rowData, columnNames);
@@ -139,13 +153,12 @@ public class tablolar extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(tablolar.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+         ///   jtable ı yeni dataları çekerek yenile
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
-            //satirsayisi = a.tablodakiVeriSayisi(jComboBox1.getSelectedItem() + "");
-
+          //comboboxa databseden tabloları çekerek koy
             Connection con = null;
 
             con = DriverManager.getConnection(adres, username, password);
@@ -164,7 +177,67 @@ public class tablolar extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(tablolar.class.getName()).log(Level.SEVERE, null, ex);
         }
+         //comboboxa databseden tabloları çekerek koy
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            
+            //seçili satırı databaseden sil
+            Connection con = DriverManager.getConnection(adres, username, password);
+            PreparedStatement preparedStmt = con.prepareStatement("delete from "+jComboBox1.getSelectedItem()+" where "+jTable1.getColumnName(0)+" = ?");
+            preparedStmt.setString(1, (String) jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()));
+            
+            preparedStmt.executeUpdate();
+            //seçili satırı databaseden sil
+            
+            
+            
+            
+            
+            ///   jtable ı yeni dataları çekerek yenile
+            int satirsayisi = 0;
+            int columnCount = 0;
+            Acenta a = new Acenta();
+            
+            satirsayisi = (a.tablodakiVeriSayisi(jComboBox1.getSelectedItem() + ""));
+
+            con = DriverManager.getConnection(adres, username, password);
+            Statement stat = con.createStatement();
+
+            ResultSet res = stat.executeQuery("select * from acenta." + jComboBox1.getSelectedItem());
+            ResultSetMetaData metadata = res.getMetaData();
+            columnCount = metadata.getColumnCount();
+
+            Object columnNames[] = new Object[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                columnNames[i] = metadata.getColumnName(i+1);
+            }
+            Object rowData[][] = new Object[satirsayisi][columnNames.length];        //{ { "Row1-Column1", "Row1-Column2", "Row1-Column3" },{ "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
+            
+           
+                for (int i = 0;res.next(); i++) {
+                    for (int j = 0; j < columnNames.length; j++) {
+                        rowData[i][j]=res.getString(j+1);
+                    }
+                }
+                
+            
+            
+            
+            DefaultTableModel model = new DefaultTableModel(rowData, columnNames);
+            jTable1.setModel(model);
+            ///   jtable ı yeni dataları çekerek yenile
+            
+            
+            
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(tablolar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,6 +275,7 @@ public class tablolar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

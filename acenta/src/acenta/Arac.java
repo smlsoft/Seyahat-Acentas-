@@ -63,7 +63,7 @@ public class Arac {
                 + "kalkis_yer,"
                 + "varis_yer,"
                 + "fiyat) "
-                + "VALUES (?, ?, ?, ?, ?,?,?,?,?)");
+                + "VALUES (?, ?, ?, ?,?,?,?,?)");
 
         preparedStatement.setInt(1, id);
         preparedStatement.setInt(2, firma_id);
@@ -71,9 +71,9 @@ public class Arac {
         preparedStatement.setInt(4, koltuk_sayisi);
         preparedStatement.setDate(5, kalkis_zaman);
       //  preparedStatement.setDate(6, new Date());
-        preparedStatement.setString(7, kalkis_yer);
-        preparedStatement.setString(8, varis_yer);
-        preparedStatement.setInt(9, fiyat);
+        preparedStatement.setString(6, kalkis_yer);
+        preparedStatement.setString(7, varis_yer);
+        preparedStatement.setInt(8, fiyat);
 
         preparedStatement.executeUpdate();
 
@@ -82,13 +82,18 @@ public class Arac {
     }
 
     void aracaKoltukEkle(int adet, int arac_id) throws SQLException {
+        Acenta a=new Acenta();
+        int koltukSayisi=a.tablodakiVeriSayisi("koltuk");
         Connection con = DriverManager.getConnection(adres, username, password);
-        Statement stat = con.createStatement();
+        
+        
+        /*Statement stat = con.createStatement();
         ResultSet res = stat.executeQuery("SELECT COUNT(*) AS rowcount FROM acenta.koltuk");
         res.next();
         int koltukSayisi = res.getInt("rowcount");
-        res.close();
+        res.close();*/
 
+        
         for (int i = 0; i < adet; i++) {
             preparedStatement = con.prepareStatement("INSERT INTO acenta.koltuk("
                     + "id,"
@@ -107,5 +112,7 @@ public class Arac {
         }
 
     }
-
+    
+    
+    
 }

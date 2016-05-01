@@ -19,7 +19,9 @@ public class musteri {
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-
+    
+    
+    
     musteri() {
     }
 
@@ -33,7 +35,8 @@ public class musteri {
         this.cinsiyet = cinsiyet;
         bonus = 0;
     }
-
+    
+    
     void musteriekle(String tc, String telno, String ad, String soyad, String mail, String sifre, String cinsiyet) throws SQLException {
 
         Connection con = DriverManager.getConnection(adres, username, password);//"jdbc:mysql://localhost:3306/acenta?useSSL=false", "root", "6122");

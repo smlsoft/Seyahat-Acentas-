@@ -29,10 +29,9 @@ public class Arac {       //çalışıyor
     
     
    // String aractur;
-    String kalkis_yer, varis_yer;
+    String kalkis_yer, varis_yer,kalkis_zaman;
     int id, firma_id, koltuk_sayisi, fiyat, bonus;
-    Date kalkis_zaman;
-    //Date varis_zaman;
+ 
     
     private Connection connect = null;
     private Statement statement = null;
@@ -43,7 +42,7 @@ public class Arac {       //çalışıyor
     Arac(){}
     
     //bu constructor databasede girdi oluşturmaz
-    Arac(String kalkis_yer, String varis_yer, int id, int firma_id, int koltuk_sayisi, int fiyat, Date kalkis_zaman, int bonus ) {  //Date varis_zaman
+    Arac(String kalkis_yer, String varis_yer, int id, int firma_id, int koltuk_sayisi, int fiyat, String kalkis_zaman, int bonus ) {  //Date varis_zaman
         //this.aractur = "araç";
         this.kalkis_zaman = kalkis_zaman;
         this.varis_yer = varis_yer;
@@ -56,7 +55,7 @@ public class Arac {       //çalışıyor
         //this.varis_zaman = varis_zaman;
     }
 
-    void AracEkle(String kalkis_yer, String varis_yer, int firma_id, int koltuk_sayisi, int fiyat, Date kalkis_zaman, int bonus) throws SQLException {   //Date varis_zaman
+    void AracEkle(String kalkis_yer, String varis_yer, int firma_id, int koltuk_sayisi, int fiyat, String kalkis_zaman, int bonus) throws SQLException {   //Date varis_zaman
         Connection con = DriverManager.getConnection(adres, username, password);
         preparedStatement = con.prepareStatement("INSERT INTO acenta.arac("
              //   + "id,"
@@ -78,7 +77,7 @@ public class Arac {       //çalışıyor
         preparedStatement.setInt(1, firma_id);
         //preparedStatement.setString(2, "araç");
         preparedStatement.setInt(2, koltuk_sayisi);
-        preparedStatement.setDate(3, kalkis_zaman);
+        preparedStatement.setString(3, kalkis_zaman);
         preparedStatement.setString(4, kalkis_yer);
         preparedStatement.setString(5, varis_yer);
         preparedStatement.setInt(6, fiyat);
@@ -121,7 +120,7 @@ public class Arac {       //çalışıyor
 
             preparedStatement.setInt(1, 0);
             preparedStatement.setInt(2, arac_id);
-            preparedStatement.setInt(3, 0);
+            preparedStatement.setString(3, "-");
             //preparedStatement.setString(4, "");
 
             preparedStatement.executeUpdate();

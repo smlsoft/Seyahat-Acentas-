@@ -47,15 +47,18 @@ public class Acenta {
         System.out.println(a.getStringDataFromDatabase("musteri", "id", "35008702589", "telno"));
         
         
-        seyahatFirmasi sF= new seyahatFirmasi("Devlet Demir Yollari");
-      //  Arac u=new Arac();
-      //  u.AracEkle("istanbul", "ankara", 2, 50, 50, new Date(2016,12,11),1);
-        otel o= new otel();
-        o.otelEkle("paradiz", 5 , "istanbul","çok güzel gelin buraya",2,200);
+        //seyahatFirmasi sF= new seyahatFirmasi("Devlet Demir Yollari");
+        //Arac u=new Arac();
+        //u.AracEkle("istanbul", "ankara", 2, 50, 50, "11.12.2016",1);
+       // otel o= new otel();
+        //o.otelEkle("tatilcehennemi", 1 , "istanbul","çok güzel gelin buraya",2,200,100);
         // personel p=new personel();
         //p.personelekle("mehmeft","123" , "zahid", "çoban");
       
-        
+        bilet b =new bilet();
+        //System.out.println(b.uygunKoltuk(2,"11.12.2016" , "istanbul", "ankara"));
+        //b.biletkes( "35008702589",0, 252, 0);
+        b.biletkes("35008702589",0, b.uygunKoltuk(2,"11.12.2016" , "istanbul", "ankara"), 0);
         
 }
 }

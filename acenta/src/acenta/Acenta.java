@@ -44,7 +44,7 @@ public class Acenta {
     public static void main(String[] args) throws SQLException {    
         
         Acenta a=new Acenta();
-        System.out.println(a.getStringDataFromDatabase("musteri", "id", "35008702589", "telno"));
+       //System.out.println(a.getStringDataFromDatabase("musteri", "id", "35008702589", "telno"));
         
         
         //seyahatFirmasi sF= new seyahatFirmasi("Devlet Demir Yollari");
@@ -61,8 +61,11 @@ public class Acenta {
         //b.biletkes("35008702589",0, b.uygunKoltuk(2,"11.12.2016" , "istanbul", "ankara"), 0);
         
         
-        //rezervasyon r=new rezervasyon();
+        rezervasyon r=new rezervasyon();
         //System.out.println(r.oteldekiSiradakiBosOdaId(3));
         //r.rezervasyonYap("35008702589", 0, 3, 0);
+        
+        //System.out.println(r.uygunOtel("11.12.2016", "15.12.2016", "istanbul")[0].aciklama);
+        
 }
 }

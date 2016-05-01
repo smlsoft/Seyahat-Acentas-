@@ -17,7 +17,7 @@ import java.sql.Statement;
  *
  * @author Zahid
  */
-public class rezervasyon {
+public class rezervasyon {  //çalışıyor
     
         String adres = "jdbc:mysql://94.73.170.236/acenta";
     String username = "fsm";
@@ -35,27 +35,36 @@ public class rezervasyon {
         //ekranda 999 idsi gelirse koltuk bulunamadı diyeceğiz  
         Connection con = DriverManager.getConnection(adres, username, password);
         Statement stat = con.createStatement();
-
+      
         ResultSet res = stat.executeQuery("select * from acenta.otel where "
                 + "sehir='"+sehir
                 + "' and giris_tarih='"+giris_tarih
-                + "' and cikis_tarih='"+cikis_tarih);
-
+                + "' and cikis_tarih='"+cikis_tarih+"'");
+       
         ResultSetMetaData metadata = res.getMetaData();
+      
         int columnCount = metadata.getColumnCount();
+      
         otel[] oteller=new otel[columnCount];
+      
         int i=0;
         if (columnCount > 0) {
+            
             while (res.next()) {
-                int odaid=oteldekiSiradakiBosOdaId(res.getInt("otel_id"));
+           
+                int odaid=oteldekiSiradakiBosOdaId((res.getInt("id")));
+                System.out.println(odaid);
                 if (odaid!=999) {
-                    oteller[i]=new otel(res.getInt("yildiz"),
-                            res.getInt("bonus"),res.getInt("fiyat"),
-                            res.getString("adi"),res.getString("sehir"),
+                    oteller[i]=new otel(
+                            res.getInt("yildiz"),
+                            res.getInt("bonus"),
+                            res.getInt("fiyat"),
+                            res.getString("adi"),
+                            res.getString("sehir"),
                             res.getString("aciklama"),
                             res.getString("giris_tarih"),
                             res.getString("cikis_tarih"),
-                            res.getInt("siradakiBosOdaId"));
+                            odaid);
                 }
             }
             

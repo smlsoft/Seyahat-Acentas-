@@ -36,7 +36,7 @@ public class seyahatFirmasi {
                 + "isim)"
                 + "VALUES (?, ?)");
 
-        preparedStatement.setInt(1, sonId);
+        preparedStatement.setInt(1, sonId+1);
         preparedStatement.setString(2, isim);
 
         preparedStatement.executeUpdate();

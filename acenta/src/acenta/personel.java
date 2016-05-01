@@ -36,7 +36,7 @@ public class personel {
         this.soyad = soyad;
     }
 
-    private personel() {
+     personel() {
         
     }
     
@@ -45,18 +45,18 @@ public class personel {
         Connection con = DriverManager.getConnection(adres, username, password);
         preparedStatement = con.prepareStatement("INSERT INTO acenta.personel("
                
-                + "id,"
+               // + "id,"
                 + "kullanici_adi,"
                 + "kullanici_sifre, "
                 + "isim,"               
                 + "soyisim) "
-                + "VALUES (?, ?, ?, ?, ?)");
+                + "VALUES ( ?, ?, ?, ?)");
 
-        preparedStatement.setInt(1, personelId);
-        preparedStatement.setString(2, kullaniciAdi);
-        preparedStatement.setString(3, kullaniciSifre);
-        preparedStatement.setString(4, ad);
-        preparedStatement.setString(5, soyad);
+        //preparedStatement.setInt(1, personelId);
+        preparedStatement.setString(1, kullaniciAdi);
+        preparedStatement.setString(2, kullaniciSifre);
+        preparedStatement.setString(3, ad);
+        preparedStatement.setString(4, soyad);
       
 
         preparedStatement.executeUpdate();

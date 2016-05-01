@@ -24,8 +24,14 @@ public class Acenta {
     public static void main(String[] args) throws SQLException {    
 
         //seyahatFirmasi sF= new seyahatFirmasi("Devlet Demir Yollari");
-        Arac ucak=new Arac();
-        ucak.AracEkle("istanbul", "ankara", 1, 100, 50, new Date(2016,12,11));
+        //Arac u=new Arac();
+        //u.AracEkle("istanbul", "ankara", 1, 100, 50, new Date(2016,12,11));
+        //otel o= new otel();
+        //o.otelEkle("paradiz", 5 , "istanbul");
+        // personel p=new personel();
+        //p.personelekle("mehmeft","123" , "zahid", "çoban");
+      
+        
         
 }
 }

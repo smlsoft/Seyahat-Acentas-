@@ -22,43 +22,37 @@ public class otel {
     String username = "fsm";
     String password = "RRrv34U8";
 
-    int id, yildiz, uygunluk, indirim;
-    String adi, tur, bolge, aciklama;
+    int  yildiz, bonus, fiyat;  //id
+    String adi, sehir, aciklama;
 
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    void otelEkle(String isim, int yildiz, String bolge) throws SQLException {
-        tur = "";
-        uygunluk = 0;
-        indirim = 0;
-        aciklama = "";
+    void otelEkle(String isim, int yildiz, String sehir, String aciklama, int bonus,int fiyat) throws SQLException {  //bonus yüzde olarak %1 ise 1
+
         Connection con = DriverManager.getConnection(adres, username, password);
         Statement stat = con.createStatement();
-        Acenta a = new Acenta();
-        int sonId = a.tablodakiVeriSayisi("otel");
+      //  Acenta a = new Acenta();
+     //   int sonId = a.tablodakiVeriSayisi("otel");
         preparedStatement = con.prepareStatement("INSERT INTO acenta.otel("
-                + "id,"
-                + "tur,"
+               // + "id,"
                 + "yildiz,"
                 + "adi,"
-                + "adres,"
-                + "uygunluk,"
+                + "sehir,"
                 + "aciklama,"
-                + "indirim)"
-                + "VALUES (?, ?,?,?,?,?,?,?)");
+                + "bonus,"
+                + "fiyat)"
+                + "VALUES (?, ?, ?, ?, ?, ?)");
 
-        preparedStatement.setInt(1, sonId + 1);
-        preparedStatement.setString(2, "");
-        preparedStatement.setInt(3, yildiz);
-        preparedStatement.setString(4, isim);
-        preparedStatement.setString(5, bolge);
-        preparedStatement.setInt(6, 0);
-        preparedStatement.setString(7, "");
-        preparedStatement.setInt(8, 0);
-
+        preparedStatement.setInt(1, yildiz);
+        preparedStatement.setString(2, isim);
+        preparedStatement.setString(3, sehir);
+        preparedStatement.setString(4, aciklama);
+        preparedStatement.setInt(5, bonus);
+        preparedStatement.setInt(6, fiyat);
+        
         preparedStatement.executeUpdate();
 
     }

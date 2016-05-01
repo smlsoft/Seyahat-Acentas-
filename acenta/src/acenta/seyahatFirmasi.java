@@ -12,10 +12,11 @@ import java.sql.Statement;
  *
  * @author Zahid
  */
-public class seyahatFirmasi {
+public class seyahatFirmasi {       //çalışıyor
     String adres = "jdbc:mysql://94.73.170.236/acenta";
     String username = "fsm";
     String password = "RRrv34U8";
+    
     int id;
     String isim;
     
@@ -28,16 +29,16 @@ public class seyahatFirmasi {
     seyahatFirmasi(String isim) throws SQLException{
     
         Connection con = DriverManager.getConnection(adres, username, password);
-        Statement stat = con.createStatement();
-        Acenta a=new Acenta();
-        int sonId = a.tablodakiVeriSayisi("firma");
+       // Statement stat = con.createStatement();
+       // Acenta a=new Acenta();
+       // int sonId = a.tablodakiVeriSayisi("firma");
         preparedStatement = con.prepareStatement("INSERT INTO acenta.firma("
-                + "id,"
+                //+ "id,"
                 + "isim)"
-                + "VALUES (?, ?)");
+                + "VALUES (?)");
 
-        preparedStatement.setInt(1, sonId+1);
-        preparedStatement.setString(2, isim);
+       // preparedStatement.setInt(1, sonId+1);
+        preparedStatement.setString(1, isim);
 
         preparedStatement.executeUpdate();
         

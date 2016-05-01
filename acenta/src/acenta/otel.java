@@ -22,9 +22,22 @@ public class otel {     //çalışıyor
     String username = "fsm";
     String password = "RRrv34U8";
 
-    int  yildiz, bonus, fiyat;  //id
+    int  yildiz, bonus, fiyat, siradakiBosOdaId;  //id
     String adi, sehir, aciklama,giris_tarih,cikis_tarih;
 
+    otel(){}
+    otel(int yildiz,int bonus,int fiyat,String adi, String sehir,String aciklama,String giris_tarih, String cikis_tarih, int siradakiBosOdaId){
+    this.yildiz=yildiz;
+    this.bonus=bonus;
+    this.fiyat=fiyat;
+    this.adi=adi;
+    this.sehir=sehir;
+    this.aciklama=aciklama;
+    this.giris_tarih=giris_tarih;
+    this.cikis_tarih=cikis_tarih;
+    this.siradakiBosOdaId=siradakiBosOdaId;
+    }
+    
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
@@ -43,8 +56,8 @@ public class otel {     //çalışıyor
                 + "sehir,"
                 + "aciklama,"
                 + "bonus,"
-                + "fiyat"
-                + "giris_tarih"
+                + "fiyat,"
+                + "giris_tarih,"
                 + "cikis_tarih)"
                 + "VALUES (?, ?, ?, ?, ?, ?,?,?)");
 
@@ -73,16 +86,9 @@ public class otel {     //çalışıyor
     }
     
      void oteleOdaEkle(int adet, int otel_id) throws SQLException {
-        Acenta a=new Acenta();
-        int koltukSayisi=a.tablodakiVeriSayisi("koltuk");
+       
         Connection con = DriverManager.getConnection(adres, username, password);
         
-        
-        /*Statement stat = con.createStatement();
-        ResultSet res = stat.executeQuery("SELECT COUNT(*) AS rowcount FROM acenta.koltuk");
-        res.next();
-        int koltukSayisi = res.getInt("rowcount");
-        res.close();*/
 
         
         for (int i = 0; i < adet; i++) {

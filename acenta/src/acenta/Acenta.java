@@ -51,14 +51,18 @@ public class Acenta {
         //Arac u=new Arac();
         //u.AracEkle("istanbul", "ankara", 2, 50, 50, "11.12.2016",1);
        // otel o= new otel();
-        //o.otelEkle("tatilcehennemi", 1 , "istanbul","çok güzel gelin buraya",2,200,100);
+        //o.otelEkle("tatilcehennemi", 1 , "istanbul","çok güzel gelin buraya",2,200,100,"11.12.2016","15.12.2016");
         // personel p=new personel();
         //p.personelekle("mehmeft","123" , "zahid", "çoban");
       
-        bilet b =new bilet();
+        //bilet b =new bilet();
         //System.out.println(b.uygunKoltuk(2,"11.12.2016" , "istanbul", "ankara"));
         //b.biletkes( "35008702589",0, 252, 0);
-        b.biletkes("35008702589",0, b.uygunKoltuk(2,"11.12.2016" , "istanbul", "ankara"), 0);
+        //b.biletkes("35008702589",0, b.uygunKoltuk(2,"11.12.2016" , "istanbul", "ankara"), 0);
         
+        
+        //rezervasyon r=new rezervasyon();
+        //System.out.println(r.oteldekiSiradakiBosOdaId(3));
+        //r.rezervasyonYap("35008702589", 0, 3, 0);
 }
 }

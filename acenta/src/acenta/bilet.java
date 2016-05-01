@@ -118,7 +118,10 @@ public class bilet {         //çalışıyor
         preparedStatement = con.prepareStatement("UPDATE acenta.koltuk SET koltuk.dolumu=1 , koltuk.musteri_id=" + musteri_tc + " where koltuk.id=?");
         preparedStatement.setInt(1, koltuk_id);
         preparedStatement.executeUpdate();
-
+        
+        //kasa update
+        preparedStatement = con.prepareStatement("UPDATE acenta.kasa SET para="+(fiyat-kullanilacakBonusTL));
+        preparedStatement.executeUpdate();
 
     }
 

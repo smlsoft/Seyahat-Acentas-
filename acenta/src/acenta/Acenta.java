@@ -60,8 +60,11 @@ public class Acenta {
         //b.biletkes( "35008702589",0, 252, 0);
         //b.biletkes("35008702589",0, b.uygunKoltuk(2,"11.12.2016" , "istanbul", "ankara"), 0);
         
-        
-        rezervasyon r=new rezervasyon();
+        //personel p=new personel();
+        //p.personelekle("admin", "123", "admin", "admin");
+        //System.out.println(p.getpersonelbykullaniciAdiSifre("admin","sifre"));
+        System.out.println("");
+        //rezervasyon r=new rezervasyon();
         //System.out.println(r.oteldekiSiradakiBosOdaId(3));
         //r.rezervasyonYap("35008702589", 0, 3, 0);
         

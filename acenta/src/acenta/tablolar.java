@@ -150,7 +150,7 @@ public class tablolar extends javax.swing.JFrame {
             for (int i = 0; i < columnCount; i++) {
                 columnNames[i] = metadata.getColumnName(i+1);
             }
-            Object rowData[][] = new Object[satirsayisi][columnNames.length];        //{ { "Row1-Column1", "Row1-Column2", "Row1-Column3" },{ "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
+            Object rowData[][] = new Object[satirsayisi][columnNames.length];        
             
            
                 for (int i = 0;res.next(); i++) {

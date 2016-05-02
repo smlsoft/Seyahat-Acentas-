@@ -25,7 +25,7 @@ public class musteri {        //hazir test edilmedi
     musteri() {
     }
 
-    musteri(String tc, String telno, String ad, String soyad, String mail, String cinsiyet) {  //sifre
+    musteri(String tc, String telno, String ad, String soyad, String mail, String cinsiyet,int bonus) {  //sifre
         this.tc = tc;
         this.telno = telno;
         this.ad = ad;
@@ -33,7 +33,7 @@ public class musteri {        //hazir test edilmedi
         this.mail = mail;
        // this.sifre = sifre;
         this.cinsiyet = cinsiyet;
-        bonus = 0;
+        this.bonus = bonus;
     }
     
     
@@ -71,6 +71,7 @@ public class musteri {        //hazir test edilmedi
         String mail = null;
         //String sifre = null;
         String cinsiyet = null;
+        int bonus=0;
         Connection con = DriverManager.getConnection(adres, username, password);
 
         Statement stat = con.createStatement();
@@ -85,10 +86,11 @@ public class musteri {        //hazir test edilmedi
                 mail = res.getString("mail");
                 //sifre = res.getString("sifre");
                 cinsiyet = res.getString("cinsiyet");
+                bonus = res.getInt("bonus"); // kontrol et
             }
         }
 
-        return new musteri(tc, telno, ad, soyad, mail, cinsiyet);
+        return new musteri(tc, telno, ad, soyad, mail, cinsiyet, bonus);
     }
 
     public static void main(String args[]) throws SQLException {

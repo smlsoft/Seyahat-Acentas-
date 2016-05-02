@@ -26,6 +26,8 @@ public class seyahatFirmasi {       //çalışıyor
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
     
+    seyahatFirmasi(){}
+    
     seyahatFirmasi(String isim) throws SQLException{
     
         Connection con = DriverManager.getConnection(adres, username, password);
@@ -34,7 +36,7 @@ public class seyahatFirmasi {       //çalışıyor
        // int sonId = a.tablodakiVeriSayisi("firma");
         preparedStatement = con.prepareStatement("INSERT INTO acenta.firma("
                 //+ "id,"
-                + "isim)"
+                + "isim)" 
                 + "VALUES (?)");
 
        // preparedStatement.setInt(1, sonId+1);
@@ -42,6 +44,16 @@ public class seyahatFirmasi {       //çalışıyor
 
         preparedStatement.executeUpdate();
         
+    }
+    
+    int getFirmaId(String firmaadi) throws SQLException{
+        Connection con = DriverManager.getConnection(adres, username, password);
+
+        Statement stat = con.createStatement();
+
+        ResultSet res = stat.executeQuery("select * from acenta.firma where="+firmaadi);
+        res.next();
+        return res.getInt("id");
     }
     
     

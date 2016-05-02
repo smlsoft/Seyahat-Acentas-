@@ -22,35 +22,38 @@ public class otel {     //çalışıyor
     String username = "fsm";
     String password = "RRrv34U8";
 
-    int  yildiz, bonus, fiyat, siradakiBosOdaId;  //id
-    String adi, sehir, aciklama,giris_tarih,cikis_tarih;
+    int yildiz, bonus, fiyat, siradakiBosOdaId, id;  //id
+    String adi, sehir, aciklama, giris_tarih, cikis_tarih;
 
-    otel(){}
-    otel(int yildiz,int bonus,int fiyat,String adi, String sehir,String aciklama,String giris_tarih, String cikis_tarih, int siradakiBosOdaId){
-    this.yildiz=yildiz;
-    this.bonus=bonus;
-    this.fiyat=fiyat;
-    this.adi=adi;
-    this.sehir=sehir;
-    this.aciklama=aciklama;
-    this.giris_tarih=giris_tarih;
-    this.cikis_tarih=cikis_tarih;
-    this.siradakiBosOdaId=siradakiBosOdaId;
+    otel() {
     }
-    
+
+    otel(int id, int yildiz, int bonus, int fiyat, String adi, String sehir, String aciklama, String giris_tarih, String cikis_tarih, int siradakiBosOdaId) {
+        this.id = id;
+        this.yildiz = yildiz;
+        this.bonus = bonus;
+        this.fiyat = fiyat;
+        this.adi = adi;
+        this.sehir = sehir;
+        this.aciklama = aciklama;
+        this.giris_tarih = giris_tarih;
+        this.cikis_tarih = cikis_tarih;
+        this.siradakiBosOdaId = siradakiBosOdaId;
+    }
+
     private Connection connect = null;
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    void otelEkle(String isim, int yildiz, String sehir, String aciklama, int bonus,int fiyat,int odaSayisi, String giris_tarih, String cikis_tarih) throws SQLException {  //bonus yüzde olarak %1 ise 1
+    void otelEkle(String isim, int yildiz, String sehir, String aciklama, int bonus, int fiyat, int odaSayisi, String giris_tarih, String cikis_tarih) throws SQLException {  //bonus yüzde olarak %1 ise 1
 
         Connection con = DriverManager.getConnection(adres, username, password);
         Statement stat = con.createStatement();
       //  Acenta a = new Acenta();
-     //   int sonId = a.tablodakiVeriSayisi("otel");
+        //   int sonId = a.tablodakiVeriSayisi("otel");
         preparedStatement = con.prepareStatement("INSERT INTO acenta.otel("
-               // + "id,"
+                // + "id,"
                 + "yildiz,"
                 + "adi,"
                 + "sehir,"
@@ -69,28 +72,24 @@ public class otel {     //çalışıyor
         preparedStatement.setInt(6, fiyat);
         preparedStatement.setString(7, giris_tarih);
         preparedStatement.setString(8, cikis_tarih);
-        
+
         preparedStatement.executeUpdate();
         stat.close();
-        
-        
+
         stat = con.createStatement();
         ResultSet res = stat.executeQuery("select * from acenta.otel");
         int otelId = 0;
         while (res.next()) {
-                otelId = res.getInt("id");
-            }
-        
-        
-        oteleOdaEkle(odaSayisi,otelId);
-    }
-    
-     void oteleOdaEkle(int adet, int otel_id) throws SQLException {
-       
-        Connection con = DriverManager.getConnection(adres, username, password);
-        
+            otelId = res.getInt("id");
+        }
 
-        
+        oteleOdaEkle(odaSayisi, otelId);
+    }
+
+    void oteleOdaEkle(int adet, int otel_id) throws SQLException {
+
+        Connection con = DriverManager.getConnection(adres, username, password);
+
         for (int i = 0; i < adet; i++) {
             preparedStatement = con.prepareStatement("INSERT INTO acenta.oda("
                     //+ "id,"
@@ -98,7 +97,7 @@ public class otel {     //çalışıyor
                     + "otel_id, "
                     + "dolumu)"
                     + "VALUES (?, ?, ?)");
-            
+
             preparedStatement.setString(1, "-");
             preparedStatement.setInt(2, otel_id);
             preparedStatement.setInt(3, 0);
@@ -108,6 +107,5 @@ public class otel {     //çalışıyor
         }
 
     }
-    
-    
+
 }

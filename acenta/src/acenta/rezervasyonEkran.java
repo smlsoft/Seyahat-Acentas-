@@ -22,10 +22,20 @@ public class rezervasyonEkran extends javax.swing.JFrame {
      String adres = "jdbc:mysql://94.73.170.236/acenta";
     String username = "fsm";
     String password = "RRrv34U8";
-    /**
-     * Creates new form rezervasyonEkran
-     */
-    public rezervasyonEkran() {
+    
+    int otel_id=123456;
+    int oda_id;
+    int oda_fiyat;
+    String giris_tarih;
+    String cikis_tarih;
+    String sehir;
+    int musteri_bonus;
+    public rezervasyonEkran(int otel_id,int oda_fiyat,String giris_tarih,String cikis_tarih,String sehir) {
+        this.otel_id=otel_id;
+        this.oda_fiyat=oda_fiyat;
+        this.giris_tarih=giris_tarih;
+        this.cikis_tarih=cikis_tarih;
+        this.sehir=sehir;
         initComponents();
     }
 
@@ -38,36 +48,47 @@ public class rezervasyonEkran extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        yenimusteri = new javax.swing.JButton();
+        bonus = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        odano = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        odemeyontem = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        kartno = new javax.swing.JTextField();
+        rezervasyonyap = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        bilgigetir = new javax.swing.JButton();
+        tc = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jButton1.setText("yeni müşteri");
+        yenimusteri.setText("yeni müşteri");
+        yenimusteri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yenimusteriActionPerformed(evt);
+            }
+        });
 
-        jTextField4.setText("0");
-        jTextField4.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        bonus.setText("0");
+        bonus.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jTextField4PropertyChange(evt);
+                bonusPropertyChange(evt);
             }
         });
 
@@ -81,12 +102,20 @@ public class rezervasyonEkran extends javax.swing.JFrame {
 
         jLabel7.setText("oda no: -");
 
-        jTextField1.setEditable(false);
-        jTextField1.setEnabled(false);
+        odano.setEditable(false);
 
         jLabel8.setText("giriş tarih: -");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "nakit", "kredikartı", "çek" }));
+        odemeyontem.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "nakit", "kredikartı", "çek" }));
+        odemeyontem.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                odemeyontemPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel9.setText("çıkış tarih: -");
 
@@ -98,37 +127,44 @@ public class rezervasyonEkran extends javax.swing.JFrame {
 
         jLabel11.setText("Fiyat: -");
 
-        jTextField2.setEditable(false);
+        kartno.setEditable(false);
 
-        jButton2.setText("rezervasyon yap");
-        jButton2.setEnabled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        rezervasyonyap.setText("rezervasyon yap");
+        rezervasyonyap.setEnabled(false);
+        rezervasyonyap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                rezervasyonyapActionPerformed(evt);
             }
         });
 
         jLabel4.setText("müşteri tc");
 
-        jButton3.setText("bilgileri getir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        bilgigetir.setText("bilgileri getir");
+        bilgigetir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                bilgigetirActionPerformed(evt);
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        tc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                tcActionPerformed(evt);
             }
         });
-        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+        tc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField3KeyPressed(evt);
+                tcKeyPressed(evt);
             }
         });
 
         jLabel12.setText("Müşteri bonus: -");
+
+        jButton1.setText("<-");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,23 +179,23 @@ public class rezervasyonEkran extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(odemeyontem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(odano, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
+                                .addGap(12, 12, 12)
                                 .addComponent(jLabel4)))
-                        .addGap(18, 18, 18)
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(bilgigetir)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3))))
+                            .addComponent(tc)
+                            .addComponent(kartno))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(yenimusteri)
                 .addGap(69, 69, 69))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -173,11 +209,11 @@ public class rezervasyonEkran extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bonus, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel11)
                         .addGap(41, 41, 41)
-                        .addComponent(jButton2)
+                        .addComponent(rezervasyonyap)
                         .addGap(50, 50, 50))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(116, 116, 116)
@@ -186,29 +222,33 @@ public class rezervasyonEkran extends javax.swing.JFrame {
                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addComponent(jButton1)
+                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(odano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(odemeyontem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kartno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(tc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yenimusteri))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(bilgigetir)
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -228,8 +268,8 @@ public class rezervasyonEkran extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jButton2)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rezervasyonyap)
+                    .addComponent(bonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addGap(21, 21, 21))
         );
@@ -237,55 +277,93 @@ public class rezervasyonEkran extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField4PropertyChange
-        jLabel11.setText(""+(fiyat-Integer.parseInt(jTextField4.getText())));
-    }//GEN-LAST:event_jTextField4PropertyChange
+    private void bonusPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_bonusPropertyChange
+        jLabel11.setText(""+(oda_fiyat-Integer.parseInt(bonus.getText())));
+    }//GEN-LAST:event_bonusPropertyChange
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        bilet b=new bilet();
-        b.biletkes(jTextField3.getText(), jComboBox1.getSelectedIndex(), koltukId,musteri_bonus);
-        JOptionPane.showConfirmDialog(this, "bilet kesildi");
-        anaMenu a=new anaMenu();
-        a.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void rezervasyonyapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rezervasyonyapActionPerformed
+         try {
+             rezervasyon r = new rezervasyon();
+             r.rezervasyonYap(tc.getText(),odemeyontem.getSelectedIndex(),otel_id, Integer.parseInt(bonus.getText()));
+             
+             JOptionPane.showMessageDialog(this, "rezervasyon yapıldı");
+             anaMenu a=new anaMenu();
+             a.setVisible(true);
+             this.dispose();
+         } catch (SQLException ex) {
+             Logger.getLogger(rezervasyonEkran.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }//GEN-LAST:event_rezervasyonyapActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void bilgigetirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bilgigetirActionPerformed
         try {
-            //oda fiyatını çek
-            Connection con = DriverManager.getConnection(adres, username, password);
-            Statement stat = con.createStatement();
-            ResultSet res = stat.executeQuery("select fiyat from acenta.otel where otel.id=(select otel_id from oda where id=" + odaId + ")");
-            res.next();
-            int fiyat = res.getInt("fiyat");
-            res.close();
+            
 
-            musteri mus=new musteri();
-            mus=mus.getmusteribytc(jTextField3.getText());
-            musteri_bonus=mus.bonus;
-            jLabel5.setText("ad: "+ mus.ad);
-            jLabel6.setText("soyad: "+ mus.soyad);
-            jLabel7.setText("koltuk no: "+ koltukId);
-            jLabel8.setText("kalkış yer: "+ kalkis_yer);
-            jLabel9.setText("varış yer: "+ varis_yer);
-            jLabel10.setText("kalkış tarih: "+ kalkis_zaman);
-            jLabel11.setText("fiyat: "+ fiyat);
-
-            jButton2.enable(true);
+            musteri mus = new musteri(); // getmusteri metodunu çağırmak için
+            musteri m = new musteri(); //get ile alınan müşteriyi aktarmak için
+            m = mus.getmusteribytc(tc.getText());
+            musteri_bonus = mus.bonus;
+            jLabel5.setText("ad: " + m.ad);
+            jLabel6.setText("soyad: " + m.soyad);
+            jLabel7.setText("oda no: " + oda_id);
+            jLabel8.setText("giriş tarih: " + giris_tarih);
+            jLabel9.setText("çıkış tarih: " + cikis_tarih);
+            jLabel10.setText("Şehir: " + sehir);
+            jLabel11.setText("fiyat: " + oda_fiyat);
+            jLabel12.setText("fiyat: " + musteri_bonus);
+            
+            if(m.ad!=null) rezervasyonyap.setEnabled(true);
+            
+            
 
         } catch (SQLException ex) {
             Logger.getLogger(odemeEkrani.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_bilgigetirActionPerformed
 
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    private void tcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tcActionPerformed
 
-    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+    }//GEN-LAST:event_tcActionPerformed
 
-    }//GEN-LAST:event_jTextField3KeyPressed
+    private void tcKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tcKeyPressed
+
+    }//GEN-LAST:event_tcKeyPressed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+         try {
+             System.out.println(otel_id);
+             rezervasyon r =new rezervasyon();
+             oda_id=r.oteldekiSiradakiBosOdaId(otel_id);
+             System.out.println(otel_id);
+             odano.setText(oda_id+"");
+             
+         } catch (SQLException ex) {
+             Logger.getLogger(rezervasyonEkran.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void odemeyontemPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_odemeyontemPopupMenuWillBecomeInvisible
+         if (odemeyontem.getSelectedIndex() > 0) {
+            kartno.setText("");
+            kartno.setEditable(true);
+        } else {
+            kartno.setText("");
+            kartno.setEditable(false);
+        }
+    }//GEN-LAST:event_odemeyontemPopupMenuWillBecomeInvisible
+
+    private void yenimusteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yenimusteriActionPerformed
+        musteriEkleEkran mE=new musteriEkleEkran();
+        mE.setVisible(true);
+    }//GEN-LAST:event_yenimusteriActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        otelSorgu os=new otelSorgu();
+        os.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,16 +395,15 @@ public class rezervasyonEkran extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new rezervasyonEkran().setVisible(true);
+              // new rezervasyonEkran().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bilgigetir;
+    private javax.swing.JTextField bonus;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -340,9 +417,11 @@ public class rezervasyonEkran extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField kartno;
+    private javax.swing.JTextField odano;
+    private javax.swing.JComboBox odemeyontem;
+    private javax.swing.JButton rezervasyonyap;
+    private javax.swing.JTextField tc;
+    private javax.swing.JButton yenimusteri;
     // End of variables declaration//GEN-END:variables
 }

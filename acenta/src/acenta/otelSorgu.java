@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,11 +21,11 @@ import java.util.logging.Logger;
  */
 public class otelSorgu extends javax.swing.JFrame {
 
-    
-    
     String adres = "jdbc:mysql://94.73.170.236/acenta";
     String username = "fsm";
     String password = "RRrv34U8";
+    static otel[] o;
+
     /**
      * Creates new form otelSorgu
      */
@@ -44,14 +45,14 @@ public class otelSorgu extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        odeme = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox();
-        jTextField5 = new javax.swing.JTextField();
+        sehir = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablo = new javax.swing.JTable();
+        giristarih = new datechooser.beans.DateChooserCombo();
+        cikistarih = new datechooser.beans.DateChooserCombo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -59,6 +60,7 @@ public class otelSorgu extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton3.setText("<-");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -66,20 +68,25 @@ public class otelSorgu extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 11, -1, -1));
 
         jLabel2.setText("Şehir");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 14, -1, -1));
 
         jLabel3.setText("giriş tarih");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 14, -1, -1));
 
         jLabel4.setText("çıkış tarih");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 45, -1, -1));
 
-        jButton1.setText("ödemeye devam et");
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        odeme.setText("ödemeye devam et");
+        odeme.setEnabled(false);
+        odeme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                odemeActionPerformed(evt);
             }
         });
+        getContentPane().add(odeme, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 551, -1, -1));
 
         jButton2.setText("otel sorgula");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -87,8 +94,11 @@ public class otelSorgu extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 41, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        getContentPane().add(sehir, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 11, 120, -1));
+
+        tablo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -96,118 +106,109 @@ public class otelSorgu extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Adı", "Yıldız", "Açıklama", "Fiyat"
+                "Adı", "Yıldız", "Fiyat", "Açıklama"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablo);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jButton3)
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(328, 328, 328)
-                        .addComponent(jButton1)))
-                .addContainerGap(55, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2))
-                            .addGap(33, 33, 33))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(jButton2))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(35, 35, 35))
-        );
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 106, -1, -1));
+        getContentPane().add(giristarih, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 11, -1, -1));
+        getContentPane().add(cikistarih, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 41, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        anaMenu a =new anaMenu();
+        anaMenu a = new anaMenu();
         a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        odemeEkrani o=new odemeEkrani(uygunKoltuk,jComboBox2.getSelectedItem()+"",jComboBox3.getSelectedItem()+"",jTextField4.getText());
-        o.setVisible(true);
+    private void odemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odemeActionPerformed
+        int seciliSatir=tablo.getSelectedRow();
+        System.out.println("secilisatir: "+seciliSatir);
+        System.out.println("o[secilisatir].id: "+o[seciliSatir].id);
+        rezervasyonEkran rE=new rezervasyonEkran(o[seciliSatir].id,o[seciliSatir].fiyat,o[seciliSatir].giris_tarih,o[seciliSatir].cikis_tarih,o[seciliSatir].sehir);  //o[seciliSatir].id
+        rE.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_odemeActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        otel[] o=uygunOtel(jTextField5.getText(), String cikis_tarih, String sehir);
+        try {
+            rezervasyon r=new rezervasyon();
+            o = r.uygunOtel(giristarih.getText(),
+             
+                    cikistarih.getText(),
+                    sehir.getSelectedItem()+"");
+            
+            System.out.println("0[0].id= "+o[0].id);
+            
+            int sutunsayisi = 4;
+            int satirsayisi = o.length;
+            
+            Object rowData[][] = new Object[satirsayisi][sutunsayisi];
+            
+            
+            System.out.println(o[0].adi+" satirsayisi"+satirsayisi);
+            
+            for (int i = 0;i<satirsayisi; i++) {
+                        rowData[i][0]=o[i].adi;
+                        rowData[i][1]=o[i].yildiz;
+                        rowData[i][2]=o[i].fiyat;
+                        rowData[i][3]=o[i].aciklama;
+                }
+            
+            String[] s={"Adı","Yıldız","Fiyat","Açıklama"};
+            DefaultTableModel model = new DefaultTableModel(rowData,s);
+            tablo.setModel(model);
+            
+            if(o.length>0){
+                odeme.setEnabled(true);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(otelSorgu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+      
+    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         try {
             // ekran geldiğinde
-            
+
             Connection con = DriverManager.getConnection(adres, username, password);
-            
+
             Statement stat = con.createStatement();
-            
-            ResultSet res = stat.executeQuery("select * from acenta.otel");
-            
-            while(res.next()){
-                jComboBox2.addItem(res.getString("adi"));
+
+           /* ResultSet res = stat.executeQuery("select * from acenta.otel");
+
+            while (res.next()) {
+                sehir.addItem(res.getString("sehir"));
             }
             res.close();
-            res = stat.executeQuery("select * from acenta.arac");
-            HashSet<String> set=new HashSet<>();
-            while(res.next()){
+          */
+            
+            
+            ResultSet res = stat.executeQuery("select * from acenta.otel");
+            HashSet<String> set = new HashSet<>();
+            while (res.next()) {
                 set.add(res.getString("sehir"));
             }
-            
-            String[] sehirler=(String[]) set.toArray();
-            
-            for (int i = 0; i <sehirler.length; i++) {
-                jComboBox2.addItem(sehirler[i]);
+
+            Object[] sehirler =set.toArray();
+
+            for (int i = 0; i < sehirler.length; i++) {
+                sehir.addItem(sehirler[i]);
             }
+            
+            
         } catch (SQLException ex) {
             Logger.getLogger(otelSorgu.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -246,16 +247,16 @@ public class otelSorgu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private datechooser.beans.DateChooserCombo cikistarih;
+    private datechooser.beans.DateChooserCombo giristarih;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JButton odeme;
+    private javax.swing.JComboBox sehir;
+    private javax.swing.JTable tablo;
     // End of variables declaration//GEN-END:variables
 }

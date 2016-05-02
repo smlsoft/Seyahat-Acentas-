@@ -44,13 +44,32 @@ public class Acenta {
     public static void main(String[] args) throws SQLException {    
         
       //  Acenta a=new Acenta();
-        //login l = new login();
-        //l.setVisible(true);
-        
-        anaMenu a=new anaMenu();
-        a.setVisible(true);
         
 
+
+
+        //login ekranıyla başlamak için    id: admin sifre: 123
+        login l = new login();
+        l.setVisible(true);
+        
+        
+        
+        
+        
+        
+        //direk ana menüye girmek için
+       // anaMenu a=new anaMenu();
+       // a.setVisible(true);
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
        //System.out.println(a.getStringDataFromDatabase("musteri", "id", "35008702589", "telno"));
         
         

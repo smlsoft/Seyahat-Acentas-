@@ -89,7 +89,7 @@ public class bilet {         //çalışıyor
 
         
         //musterinin mevcut bonusu
-        res = stat.executeQuery("select toplam_bonus from acenta.musteri where id=" + musteri_tc);
+        res = stat.executeQuery("select toplam_bonus from acenta.musteri where id='" + musteri_tc+"'");
         res.next();
         int musteriBonus = res.getInt("toplam_bonus");
         res.close();
@@ -120,7 +120,11 @@ public class bilet {         //çalışıyor
         preparedStatement.executeUpdate();
         
         //kasa update
-        preparedStatement = con.prepareStatement("UPDATE acenta.kasa SET para="+(fiyat-kullanilacakBonusTL));
+        res = stat.executeQuery("select para from kasa");
+        res.next();
+        int kasadakiPara = res.getInt("para");
+        int kasadakiSonPara = kasadakiPara+fiyat-kullanilacakBonusTL;
+        preparedStatement = con.prepareStatement("UPDATE acenta.kasa SET para="+kasadakiSonPara);
         preparedStatement.executeUpdate();
 
     }

@@ -35,20 +35,29 @@ public class rezervasyon {  //çalışıyor
         //ekranda 999 idsi gelirse koltuk bulunamadı diyeceğiz  
         Connection con = DriverManager.getConnection(adres, username, password);
         Statement stat = con.createStatement();
-      
-        ResultSet res = stat.executeQuery("select * from acenta.otel where "
+      //SELECT COUNT(*) AS rowcount FROM acenta."+tabloAdi
+        ResultSet res = stat.executeQuery("select COUNT(*) AS rowcount from acenta.otel where "
                 + "sehir='"+sehir
                 + "' and giris_tarih='"+giris_tarih
                 + "' and cikis_tarih='"+cikis_tarih+"'");
-       
+       //
         ResultSetMetaData metadata = res.getMetaData();
       
-        int columnCount = metadata.getColumnCount();
+        res.next();
+        int rowCount = res.getInt("rowcount");
+        res.close();
       
-        otel[] oteller=new otel[columnCount];
-      
+        otel[] oteller=new otel[rowCount];
+      ///
+        
+        
+        res = stat.executeQuery("select * from acenta.otel where "
+                + "sehir='"+sehir
+                + "' and giris_tarih='"+giris_tarih
+                + "' and cikis_tarih='"+cikis_tarih+"'");
+        
         int i=0;
-        if (columnCount > 0) {
+        if (rowCount > 0) {
             
             while (res.next()) {
            
@@ -56,6 +65,7 @@ public class rezervasyon {  //çalışıyor
                 System.out.println(odaid);
                 if (odaid!=999) {
                     oteller[i]=new otel(
+                            res.getInt("id"), //id eklendi
                             res.getInt("yildiz"),
                             res.getInt("bonus"),
                             res.getInt("fiyat"),
@@ -66,7 +76,9 @@ public class rezervasyon {  //çalışıyor
                             res.getString("cikis_tarih"),
                             odaid);
                 }
+                i++;
             }
+            
             
         } else {
             return null;
@@ -126,7 +138,7 @@ public class rezervasyon {  //çalışıyor
 
         
         //musterinin mevcut bonusu
-        res = stat.executeQuery("select toplam_bonus from acenta.musteri where id=" + musteri_tc);
+        res = stat.executeQuery("select toplam_bonus from acenta.musteri where id='" + musteri_tc+"'");
         res.next();
         int musteriBonus = res.getInt("toplam_bonus");
         res.close();
@@ -162,7 +174,11 @@ public class rezervasyon {  //çalışıyor
 
 
 //kasa update
-        preparedStatement = con.prepareStatement("UPDATE acenta.kasa SET para="+(fiyat-kullanilacakBonusTL));
+        res = stat.executeQuery("select para from kasa");
+        res.next();
+        int kasadakiPara = res.getInt("para");
+        int kasadakiSonPara = kasadakiPara+fiyat-kullanilacakBonusTL;
+        preparedStatement = con.prepareStatement("UPDATE acenta.kasa SET para="+kasadakiSonPara);
         preparedStatement.executeUpdate();
 
     }

@@ -65,6 +65,7 @@ public class odemeEkrani extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -108,6 +109,11 @@ public class odemeEkrani extends javax.swing.JFrame {
         });
 
         jButton1.setText("yeni müşteri");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("ad: -");
 
@@ -148,6 +154,13 @@ public class odemeEkrani extends javax.swing.JFrame {
         });
 
         jLabel13.setText("kullanılacak bonus");
+
+        jButton4.setText("<-");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,11 +221,15 @@ public class odemeEkrani extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addComponent(jButton2)
                 .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jButton4)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addComponent(jButton4)
+                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -280,7 +297,7 @@ public class odemeEkrani extends javax.swing.JFrame {
             musteri mus = new musteri(); // getmusteri metodunu çağırmak için
             musteri m = new musteri(); //get ile alınan müşteriyi aktarmak için
             m = mus.getmusteribytc(jTextField3.getText());
-            musteri_bonus = mus.bonus;
+            musteri_bonus = m.bonus;
             jLabel5.setText("ad: " + m.ad);
             jLabel6.setText("soyad: " + m.soyad);
             jLabel7.setText("koltuk no: " + koltukId);
@@ -288,6 +305,7 @@ public class odemeEkrani extends javax.swing.JFrame {
             jLabel9.setText("varış yer: " + varis_yer);
             jLabel10.setText("kalkış tarih: " + kalkis_zaman);
             jLabel11.setText("fiyat: " + fiyat);
+            jLabel12.setText("müşteri bonus: " + musteri_bonus);
             
             if(m.ad!=null) jButton2.setEnabled(true);
             
@@ -302,8 +320,9 @@ public class odemeEkrani extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
+            int kullanilacakBonus=Integer.parseInt(jTextField4.getText());
             bilet b = new bilet();
-            b.biletkes(jTextField3.getText(), jComboBox1.getSelectedIndex(), koltukId, musteri_bonus);
+            b.biletkes(jTextField3.getText(), jComboBox1.getSelectedIndex(), koltukId, kullanilacakBonus);
             JOptionPane.showMessageDialog(this, "bilet kesildi");
             anaMenu a = new anaMenu();
             a.setVisible(true);
@@ -330,6 +349,17 @@ public class odemeEkrani extends javax.swing.JFrame {
             jTextField2.setEditable(false);
         }
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       musteriEkleEkran mE=new musteriEkleEkran();
+        mE.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        aracSorgu as = new aracSorgu();
+        as.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,6 +400,7 @@ public class odemeEkrani extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

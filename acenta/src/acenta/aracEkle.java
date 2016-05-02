@@ -38,7 +38,7 @@ public class aracEkle extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        koltuk = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
@@ -62,9 +62,9 @@ public class aracEkle extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        koltuk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                koltukActionPerformed(evt);
             }
         });
 
@@ -151,7 +151,7 @@ public class aracEkle extends javax.swing.JFrame {
                         .addComponent(jTextField5)
                         .addComponent(jTextField3)
                         .addComponent(jComboBox1, 0, 92, Short.MAX_VALUE)
-                        .addComponent(jTextField1)
+                        .addComponent(koltuk)
                         .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(70, Short.MAX_VALUE))
@@ -170,7 +170,7 @@ public class aracEkle extends javax.swing.JFrame {
                         .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(koltuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -200,9 +200,9 @@ public class aracEkle extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void koltukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_koltukActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_koltukActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         
@@ -244,10 +244,13 @@ public class aracEkle extends javax.swing.JFrame {
          seyahatFirmasi sf=new seyahatFirmasi();
          int firmaid=sf.getFirmaId(jComboBox1.getSelectedItem()+"");
          
+         int koltuksayisi=Integer.parseInt(koltuk.getText());
+         System.out.println("koltuk sayisi= "+koltuksayisi+"   işme yap 3 le topla= "+(3+koltuksayisi));
+         
          a.AracEkle(jTextField2.getText(),
                  jTextField3.getText(),
                  firmaid,
-                 Integer.parseInt(jTextField1.getText()),
+                 koltuksayisi,
                  Integer.parseInt(jTextField5.getText()),
                  dateChooser.getText(),
                  Integer.parseInt(jTextField6.getText()));
@@ -312,10 +315,10 @@ public class aracEkle extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField koltuk;
     // End of variables declaration//GEN-END:variables
 }

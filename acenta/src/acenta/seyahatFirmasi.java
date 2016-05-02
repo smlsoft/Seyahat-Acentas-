@@ -51,7 +51,7 @@ public class seyahatFirmasi {       //çalışıyor
 
         Statement stat = con.createStatement();
 
-        ResultSet res = stat.executeQuery("select * from acenta.firma where="+firmaadi);
+        ResultSet res = stat.executeQuery("select * from acenta.firma where isim='"+firmaadi+"'");
         res.next();
         return res.getInt("id");
     }

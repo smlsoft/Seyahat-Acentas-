@@ -86,7 +86,7 @@ public class musteri {        //hazir test edilmedi
                 mail = res.getString("mail");
                 //sifre = res.getString("sifre");
                 cinsiyet = res.getString("cinsiyet");
-                bonus = res.getInt("bonus"); // kontrol et
+                bonus = res.getInt("toplam_bonus"); // kontrol et
             }
         }
 
@@ -95,7 +95,7 @@ public class musteri {        //hazir test edilmedi
 
     public static void main(String args[]) throws SQLException {
         musteri mus = new musteri();
-        mus.musteriekle("35008702589", "5378196122", "zahidcoban@gmail.com", "erkek", "Muhammed Zahid", "Çoban");
+       // mus.musteriekle("35008702589", "5378196122", "zahidcoban@gmail.com", "erkek", "Muhammed Zahid", "Çoban");
         System.out.println(mus.getmusteribytc("35008702589").ad);
     }
 

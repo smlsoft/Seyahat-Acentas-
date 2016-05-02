@@ -76,8 +76,12 @@ public class personel {
 
         ResultSet res = stat.executeQuery("select * from acenta.personel where kullanici_adi='"+kullaniciAdi+"' and kullanici_sifre='"+sifre+"'");
 
-        ResultSetMetaData metadata = res.getMetaData();
-        int columnCount = metadata.getColumnCount();
+        
+        int columnCount = 0;
+        while(res.next()){
+            columnCount++;
+        }
+           System.out.println(columnCount);
         if(columnCount>0) return true;
         else return false;
         

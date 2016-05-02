@@ -19,18 +19,19 @@ import javax.swing.JOptionPane;
  * @author Zahid
  */
 public class odemeEkrani extends javax.swing.JFrame {
+
     String adres = "jdbc:mysql://94.73.170.236/acenta";
     String username = "fsm";
     String password = "RRrv34U8";
     int musteri_bonus;
-    int koltukId,fiyat;
+    int koltukId, fiyat;
     String kalkis_yer, varis_yer, kalkis_zaman;
-    
-    public odemeEkrani(int koltukId,String kalkis_yer,String varis_yer, String kalkis_zaman) {
-        this.koltukId=koltukId;
-        this.kalkis_yer=kalkis_yer;
-        this.varis_yer=varis_yer;
-        this.kalkis_zaman=kalkis_zaman;
+
+    public odemeEkrani(int koltukId, String kalkis_yer, String varis_yer, String kalkis_zaman) {
+        this.koltukId = koltukId;
+        this.kalkis_yer = kalkis_yer;
+        this.varis_yer = varis_yer;
+        this.kalkis_zaman = kalkis_zaman;
         initComponents();
     }
 
@@ -66,13 +67,26 @@ public class odemeEkrani extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("koltuk no");
 
         jTextField1.setEditable(false);
-        jTextField1.setEnabled(false);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "nakit", "kredikartı", "çek" }));
+        jComboBox1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                jComboBox1PopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel2.setText("ödeme yöntemi");
 
@@ -144,14 +158,6 @@ public class odemeEkrani extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
@@ -162,10 +168,22 @@ public class odemeEkrani extends javax.swing.JFrame {
                                 .addComponent(jButton3)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jTextField2)
-                            .addComponent(jTextField3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addGap(69, 69, 69))
+                            .addComponent(jTextField3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(69, 69, 69))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(157, 157, 157))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,11 +260,11 @@ public class odemeEkrani extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
-        
+
     }//GEN-LAST:event_jTextField3KeyPressed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        
+
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -258,33 +276,36 @@ public class odemeEkrani extends javax.swing.JFrame {
             res.next();
             int fiyat = res.getInt("fiyat");
             res.close();
+
+            musteri mus = new musteri(); // getmusteri metodunu çağırmak için
+            musteri m = new musteri(); //get ile alınan müşteriyi aktarmak için
+            m = mus.getmusteribytc(jTextField3.getText());
+            musteri_bonus = mus.bonus;
+            jLabel5.setText("ad: " + m.ad);
+            jLabel6.setText("soyad: " + m.soyad);
+            jLabel7.setText("koltuk no: " + koltukId);
+            jLabel8.setText("kalkış yer: " + kalkis_yer);
+            jLabel9.setText("varış yer: " + varis_yer);
+            jLabel10.setText("kalkış tarih: " + kalkis_zaman);
+            jLabel11.setText("fiyat: " + fiyat);
             
-            musteri mus=new musteri();
-            mus=mus.getmusteribytc(jTextField3.getText());
-            musteri_bonus=mus.bonus;
-            jLabel5.setText("ad: "+ mus.ad);
-            jLabel6.setText("soyad: "+ mus.soyad);
-            jLabel7.setText("koltuk no: "+ koltukId);
-            jLabel8.setText("kalkış yer: "+ kalkis_yer);
-            jLabel9.setText("varış yer: "+ varis_yer);
-            jLabel10.setText("kalkış tarih: "+ kalkis_zaman);
-            jLabel11.setText("fiyat: "+ fiyat);
+            if(m.ad!=null) jButton2.setEnabled(true);
             
-            jButton2.enable(true);
             
+
         } catch (SQLException ex) {
             Logger.getLogger(odemeEkrani.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            bilet b=new bilet();
-            b.biletkes(jTextField3.getText(), jComboBox1.getSelectedIndex(), koltukId,musteri_bonus);
-            JOptionPane.showConfirmDialog(this, "bilet kesildi");
-            anaMenu a=new anaMenu();
+            bilet b = new bilet();
+            b.biletkes(jTextField3.getText(), jComboBox1.getSelectedIndex(), koltukId, musteri_bonus);
+            JOptionPane.showMessageDialog(this, "bilet kesildi");
+            anaMenu a = new anaMenu();
             a.setVisible(true);
             this.dispose();
         } catch (SQLException ex) {
@@ -293,8 +314,22 @@ public class odemeEkrani extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField4PropertyChange
-        jLabel11.setText(""+(fiyat-Integer.parseInt(jTextField4.getText())));
+        jLabel11.setText("" + (fiyat - Integer.parseInt(jTextField4.getText())));
     }//GEN-LAST:event_jTextField4PropertyChange
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jTextField1.setText("" + koltukId);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
+        if (jComboBox1.getSelectedIndex() > 0) {
+            jTextField2.setText("");
+            jTextField2.setEditable(true);
+        } else {
+            jTextField2.setText("");
+            jTextField2.setEditable(false);
+        }
+    }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments

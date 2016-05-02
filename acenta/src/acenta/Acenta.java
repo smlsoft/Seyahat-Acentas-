@@ -43,7 +43,14 @@ public class Acenta {
     
     public static void main(String[] args) throws SQLException {    
         
-        Acenta a=new Acenta();
+      //  Acenta a=new Acenta();
+        //login l = new login();
+        //l.setVisible(true);
+        
+        anaMenu a=new anaMenu();
+        a.setVisible(true);
+        
+
        //System.out.println(a.getStringDataFromDatabase("musteri", "id", "35008702589", "telno"));
         
         
@@ -52,8 +59,8 @@ public class Acenta {
         //u.AracEkle("istanbul", "ankara", 2, 50, 50, "11.12.2016",1);
        // otel o= new otel();
         //o.otelEkle("tatilcehennemi", 1 , "istanbul","çok güzel gelin buraya",2,200,100,"11.12.2016","15.12.2016");
-        // personel p=new personel();
-        //p.personelekle("mehmeft","123" , "zahid", "çoban");
+        //personel p=new personel();
+       //p.personelekle("admin","123" , "admin", "admin");
       
         //bilet b =new bilet();
         //System.out.println(b.uygunKoltuk(2,"11.12.2016" , "istanbul", "ankara"));
@@ -63,7 +70,7 @@ public class Acenta {
         //personel p=new personel();
         //p.personelekle("admin", "123", "admin", "admin");
         //System.out.println(p.getpersonelbykullaniciAdiSifre("admin","sifre"));
-        System.out.println("");
+       
         //rezervasyon r=new rezervasyon();
         //System.out.println(r.oteldekiSiradakiBosOdaId(3));
         //r.rezervasyonYap("35008702589", 0, 3, 0);

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -63,37 +64,31 @@ public class personel {
 
     }
 
-    personel getpersonelbykullaniciAdi(String kullaniciAdi) throws SQLException {
+       boolean getpersonelbykullaniciAdiSifre(String kullaniciAdi,String sifre) throws SQLException {
         
         String ad = null;
         String soyad = null;
-        String sifre = null;
+      
         
         Connection con = DriverManager.getConnection(adres, username, password);
 
         Statement stat = con.createStatement();
 
-        ResultSet res = stat.executeQuery("select * from acenta.personel");
+        ResultSet res = stat.executeQuery("select * from acenta.personel where kullanici_adi='"+kullaniciAdi+"' and kullanici_sifre='"+sifre+"'");
 
-        while (res.next()) {
-            if (res.getString("kullanici_adi").equals(kullaniciAdi)) {
-                
-                sifre = res.getString("kullanici_sifre");
-                ad = res.getString("isim");
-                soyad = res.getString("soyisim");  
-                
-              
-            }
+        
+        int columnCount = 0;
+        while(res.next()){
+            columnCount++;
         }
-
-        return new personel( kullaniciAdi,  kullaniciSifre,  ad,  soyad);
+           System.out.println(columnCount);
+        if(columnCount>0) return true;
+        else return false;
+        
+        
     }
       
-      public static void main(String args[]) throws SQLException {
-        personel p1 = new personel();
-        //p1.personelekle("root","000", "zahid", "coban");
-        System.out.println(p1.getpersonelbykullaniciAdi("root").ad+" "+p1.getpersonelbykullaniciAdi("root").soyad);
-    }
+ 
 
 }
 

@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
  *
  * @author Zahid
  */
-public class Arac {
+public class Arac {       //çalışıyor
 
     String adres = "jdbc:mysql://94.73.170.236/acenta";
     String username = "fsm";
@@ -28,11 +28,10 @@ public class Arac {
     
     
     
-    String aractur; //hava kara
-    String kalkis_yer, varis_yer;
-    int id, firma_id, koltuk_sayisi, fiyat;
-    Date kalkis_zaman;
-    //Date varis_zaman;
+   // String aractur;
+    String kalkis_yer, varis_yer,kalkis_zaman;
+    int id, firma_id, koltuk_sayisi, fiyat, bonus;
+ 
     
     private Connection connect = null;
     private Statement statement = null;
@@ -43,8 +42,8 @@ public class Arac {
     Arac(){}
     
     //bu constructor databasede girdi oluşturmaz
-    Arac(String kalkis_yer, String varis_yer, int id, int firma_id, int koltuk_sayisi, int fiyat, Date kalkis_zaman ) {  //Date varis_zaman
-        this.aractur = "araç";
+    Arac(String kalkis_yer, String varis_yer, int id, int firma_id, int koltuk_sayisi, int fiyat, String kalkis_zaman, int bonus ) {  //Date varis_zaman
+        //this.aractur = "araç";
         this.kalkis_zaman = kalkis_zaman;
         this.varis_yer = varis_yer;
         this.id = id;
@@ -52,39 +51,49 @@ public class Arac {
         this.koltuk_sayisi = koltuk_sayisi;
         this.fiyat = fiyat;
         this.kalkis_yer = kalkis_yer;
+        this.bonus=bonus;
         //this.varis_zaman = varis_zaman;
     }
 
-    void AracEkle(String kalkis_yer, String varis_yer, int firma_id, int koltuk_sayisi, int fiyat, Date kalkis_zaman) throws SQLException {   //Date varis_zaman
+    void AracEkle(String kalkis_yer, String varis_yer, int firma_id, int koltuk_sayisi, int fiyat, String kalkis_zaman, int bonus) throws SQLException {   //Date varis_zaman
         Connection con = DriverManager.getConnection(adres, username, password);
         preparedStatement = con.prepareStatement("INSERT INTO acenta.arac("
-                + "id,"
+             //   + "id,"
                 + "firma_id,"
-                + "aractur, "
+                //+ "aractur, "
                 + "koltuk_sayisi,"
                 + "kalkis_zaman,"
                // + "varis_zaman,"
                 + "kalkis_yer,"
                 + "varis_yer,"
-                + "fiyat) "
-                + "VALUES (?, ?, ?, ?,?,?,?,?)");
+                + "fiyat,"
+                + "bonus) "
+                + "VALUES ( ?, ?, ?,?,?,?,?)"); //??
         
-        Acenta a=new Acenta();
-        int sonId=a.tablodakiVeriSayisi("arac");
+        //Acenta a=new Acenta();
+       // int sonId=a.tablodakiVeriSayisi("arac");
         
-        preparedStatement.setInt(1, sonId+1);
-        preparedStatement.setInt(2, firma_id);
-        preparedStatement.setString(3, "araç");
-        preparedStatement.setInt(4, koltuk_sayisi);
-        preparedStatement.setDate(5, kalkis_zaman);
-      //  preparedStatement.setDate(6, new Date());
-        preparedStatement.setString(6, kalkis_yer);
-        preparedStatement.setString(7, varis_yer);
-        preparedStatement.setInt(8, fiyat);
+      //  preparedStatement.setInt(1, sonId+1);
+        preparedStatement.setInt(1, firma_id);
+        //preparedStatement.setString(2, "araç");
+        preparedStatement.setInt(2, koltuk_sayisi);
+        preparedStatement.setString(3, kalkis_zaman);
+        preparedStatement.setString(4, kalkis_yer);
+        preparedStatement.setString(5, varis_yer);
+        preparedStatement.setInt(6, fiyat);
+        preparedStatement.setInt(7, bonus);
 
         preparedStatement.executeUpdate();
-
-        aracaKoltukEkle(koltuk_sayisi, sonId+1);
+        
+        Statement stat = con.createStatement();
+        ResultSet res = stat.executeQuery("select * from acenta.arac");
+        int aracId = 0;
+        while (res.next()) {
+                aracId = res.getInt("id");
+            }
+        
+        
+        aracaKoltukEkle(koltuk_sayisi, aracId);
 
     }
 
@@ -103,19 +112,19 @@ public class Arac {
         
         for (int i = 0; i < adet; i++) {
             preparedStatement = con.prepareStatement("INSERT INTO acenta.koltuk("
-                    + "id,"
+                    //+ "id,"
                     + "dolumu,"
                     + "arac_id, "
                     + "musteri_id)"
-                    + "VALUES (?, ?, ?, ?)");
+                    + "VALUES (?, ?, ?)");
 
-            preparedStatement.setInt(1, koltukSayisi);
-            preparedStatement.setInt(2, 0);
-            preparedStatement.setInt(3, arac_id);
-            preparedStatement.setString(4, "");
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setInt(2, arac_id);
+            preparedStatement.setString(3, "-");
+            //preparedStatement.setString(4, "");
 
             preparedStatement.executeUpdate();
-            koltukSayisi++;
+            //koltukSayisi++;
         }
 
     }
